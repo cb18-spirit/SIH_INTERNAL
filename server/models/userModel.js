@@ -10,4 +10,5 @@ const userschema=new mongoose.Schema({
     isAccountVerified:{type:Boolean, default:false},
     restOtp:{type:String,default:''},
     resetOtpExpireAt:{type:Number, default:0},
+    
 })
