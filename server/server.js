@@ -14,17 +14,25 @@ mongoose.connect(MONGOURL).then(() => {
 }).catch((err) => {
   console.error("Connection error:", err.message);
 });
+import authRouter from './routes/authRoutes.js';
 
 const app=express();
 const port=3000;
 
 app.use(express.json());
-app.use(cookieParser);
+app.use(cookieParser());
 app.use(cors({credentials: true}));
 
-
+//api end points
 app.get('/', (req, res) => {
+   console.log("GET / was hit");
   res.send('Hello! Server is working!');
 });
 
-app.listen(port,()=>console.log('server is running at port 3000'));
+app.use('/api/auth',authRouter)
+
+
+
+app.listen(port,()=>{
+  console.log(`server is running at port ${port}`);
+});

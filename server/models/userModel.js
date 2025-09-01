@@ -1,4 +1,4 @@
-import { verify } from "jsonwebtoken";
+
 import mongoose from "mongoose";
 
 const userschema=new mongoose.Schema({
@@ -12,3 +12,7 @@ const userschema=new mongoose.Schema({
     resetOtpExpireAt:{type:Number, default:0},
     
 })
+
+const userModel=mongoose.models.user || mongoose.model('user',userschema);
+
+export default userModel;  // default is used that when we were imprting this model then no need of curly braces
