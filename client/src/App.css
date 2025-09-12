@@ -4,3 +4,8 @@
     color: white;
      background-color: black;
 }
+.container{
+    height:20px;
+    display: flex;
+    empty-cells: \;
+}
