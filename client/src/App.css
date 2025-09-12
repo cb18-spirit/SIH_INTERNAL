@@ -1,11 +1,4 @@
 *{
-    margin: 0;
-    padding: 0;
-    color: white;
-     background-color: black;
-}
-.container{
-    height:20px;
-    display: flex;
-    empty-cells: \;
+    padding:0px;
+    margin:0px;
 }
