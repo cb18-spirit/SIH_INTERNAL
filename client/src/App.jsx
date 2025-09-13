@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Emailverify from './pages/Emailverify'
 import ResetPassword from './pages/ResetPassword'
+import Updates from './pages/Updates'
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path='/login' element={<Login/>}/>
          <Route path='/email-verify' element={<Emailverify/>}/>
           <Route path='/reset-password' element={<ResetPassword/>}/>
+          <Route path='/updates' element={<Updates/>}/>
       </Routes>
            
     </div>
