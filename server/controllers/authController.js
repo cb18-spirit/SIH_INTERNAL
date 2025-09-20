@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";  //used to hash password for security purpose
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
+import nodemailer from "../config/nodemailer.js";
 
 // async and is promise which is type of asyncronous function;
 // asyncronous means task we will execute after complete of brfore task only
@@ -38,6 +39,17 @@ export const register= async(req, res)=>{
         maxAge: 7*24*60*60*1000,
 
     })
+
+
+
+    const mailOptions={
+        from:process.env.SENDER_EMAIL,
+        to:email,
+        subject:'Welcome to Our Platform',
+        text:`Hello ${name}\n${email},\n\nThank you for registering on our platform! We're excited to have you on board.\n\nBest regards,\nThe Team`
+    };
+
+    await nodemailer.sendMail(mailOptions);
 
      return res.json({success:true});
         
