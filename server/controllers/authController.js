@@ -111,3 +111,65 @@ export const logout=async(req,res)=>{
     
     
 }
+
+export const sendVerifyOtp=async(req,res)=>{
+    try{
+      const{userId}=req.body;
+
+      const user=await userModel.findById(userId);
+
+      if(user.isAccountVerified){
+        return res.json({success:false,message:"account already exists"});
+      }
+        const otp=Math.floor(100000 + Math.random()*900000).toString();
+
+        const otpExpireAt=Date.now()+10*60*1000;
+        user.verifiyOtp=otp;
+        user.verifiyOtpExpireAt=otpExpireAt;
+
+        await user.save();
+
+        const mailOptions={
+            from:process.env.SENDER_EMAIL,
+            to:user.email,
+            subject:'Your Account Verification OTP',
+            text:`Hello ${user.name},\n\nYour OTP for account verification is: ${otp}\nThis OTP is valid for 10 minutes.\n\nIf you did not request this, please ignore this email.\n\nBest regards,\nThe Team`
+        };
+        await nodemailer.sendMail(mailOptions);
+
+        return res.json({success:true, message:'otp sent to your email'});
+    
+
+        }catch(error){
+        return res.json({success:false, message:error.message});
+    }
+}
+
+export const verifyAccount=async(req,res)=>{
+       
+    const{userId,otp}=req.body;
+
+    if(!userId || !otp){
+        return register.json({success:false,message:'invalid requests'});
+
+    }
+
+    try {
+        const user=await userModel.findById(userId);
+        
+        if(user.isAccountVerified){
+            return res.json({success:false,message:'account already verified'});
+        }
+
+        if(Date.now()>user.verifiyOtpExpireAt || user.verifiyOtp!==otp){
+            return res.json({success:false,message:'invalid or expired otp'});
+        }
+
+
+       
+
+}catch(error){
+    return res.json({success:false,message:error.message})
+}
+}
+
