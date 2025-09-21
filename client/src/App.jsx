@@ -6,7 +6,7 @@ import Login from './pages/Login'
 import Emailverify from './pages/Emailverify'
 import ResetPassword from './pages/ResetPassword'
 import Updates from './pages/Updates'
-import Footer from './components/Footer'
+
 
 
 const App = () => {
@@ -19,7 +19,6 @@ const App = () => {
           <Route path='/reset-password' element={<ResetPassword/>}/>
           <Route path='/updates' element={<Updates/>}/>
       </Routes>
-           
     </div>
   )
 }

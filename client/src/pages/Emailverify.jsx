@@ -1,6 +1,6 @@
 import React from 'react'
 
-const emailVerify = () => {
+const EmailVerify = () => {
   return (
     <div>
       <h1>verify</h1>
@@ -8,4 +8,4 @@ const emailVerify = () => {
   )
 }
 
-export default emailVerify
+export default EmailVerify

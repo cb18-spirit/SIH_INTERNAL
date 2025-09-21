@@ -17,9 +17,9 @@ const Header = () => {
   </div>
 
   {/* Right side circle */}
-  <div className="w-full md:w-1/2 flex justify-center mt-10 md:mt-0">
+  <div className="w-full md:w-1/2 flex justify-center mt-10 md:mt-5">
     <div className="relative grid border-10 aspect-square border-green-500 rounded-full 
-                    w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[300px] md:h-[300px]">
+              w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[300px] md:h-[300px]">
       <h3 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center sm:text-lg text-xl ">
         Lorem, ipsum dolor.
       </h3>

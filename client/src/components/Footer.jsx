@@ -1,7 +1,7 @@
 // src/components/Footer.jsx
 export default function Footer() {
   return (
-    <footer className="bg-green-700 text-white py-10 px-6">
+    <footer className="bg-[#051732] text-white py-10 px-6 mt-20">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         
         {/* Brand */}
@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div>
+        <div >
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-gray-200">
             <li><a href="/" className="hover:text-yellow-300">Home</a></li>
