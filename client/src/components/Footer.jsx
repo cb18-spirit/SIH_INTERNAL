@@ -1,11 +1,9 @@
 // src/components/Footer.jsx
 export default function Footer() {
   return (
-<<<<<<< HEAD
-    <footer className="bg-[#051732] text-white py-10 px-6 mt-20">
-=======
+
     <footer className="bg-[#051732] text-white py-10 px-6">
->>>>>>> 0e8598f20d385784844096fc5cc0e16e4a227494
+
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         
         {/* Brand */}

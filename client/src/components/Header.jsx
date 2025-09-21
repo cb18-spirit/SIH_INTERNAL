@@ -27,13 +27,7 @@ const Header = () => {
    
 
   {/* Right side circle */}
-<<<<<<< HEAD
-  <div className="w-full md:w-1/2 flex justify-center mt-10 md:mt-5">
-    <div className="relative grid border-10 aspect-square border-green-500 rounded-full 
-              w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[300px] md:h-[300px]">
-      <h3 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center sm:text-lg text-xl ">
-        Lorem, ipsum dolor.
-=======
+
   <div className="w-full md:w-1/2 flex justify-center mt-20">
     <div className="relative grid border-[12px] aspect-square text-[#285ca8] rounded-full 
                     w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] md:w-[340px] md:h-[340px]
@@ -42,7 +36,7 @@ const Header = () => {
       <h3 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
                      text-center text-white font-semibold text-lg sm:text-xl">
         Smarter Farming,<br/>Better Future 🌱
->>>>>>> 0e8598f20d385784844096fc5cc0e16e4a227494
+
       </h3>
 
       {/* Floating images with animation */}
