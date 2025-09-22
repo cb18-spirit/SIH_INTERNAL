@@ -1,7 +1,12 @@
 
 import React , {useState}from 'react'
 
+import { useNavigate } from 'react-router-dom';
+
 const Updates = () => {
+
+  const navigate = useNavigate();
+
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -31,19 +36,19 @@ const Updates = () => {
         >
 
           <li>
-            <a href="/Projects" className="text-white text-xl no-underline">
+            <button onClick={()=>navigate('/AI-Assistant')} className="text-white text-xl no-underline">
              AI Assistant
-            </a>
+            </button>
           </li>
           <li>
-            <a href="/blogs" className="text-white text-xl no-underline pr-180">
-              Disease Detection
-            </a>
+            <button onClick={()=>navigate('/Disease-Detection')} className="text-white text-xl no-underline">
+             Disease Detection
+            </button>
           </li>
     
 
            <li>
-            <a href="/contact" className="text-white text-xl no-underline">
+            <a  className="text-white text-xl no-underline">
                logout
             </a>
           </li>
