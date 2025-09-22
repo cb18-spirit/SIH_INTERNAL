@@ -48,14 +48,21 @@ const Updates = () => {
         </button>
       </li>
       <li>
-        <button onClick={() => navigate('/Disease-Detection')} className="text-white text-base no-underline hover:text-green-300">
+        <button onClick={() => navigate('/Disease-Detection')} className="text-white text-base no-underline hover:text-red-400 cursor-pointer">
           Disease Detection
         </button>
       </li>
+
+        <li>
+        <button onClick={() => navigate('/profile')} className="text-white text-base no-underline hover:text-red-400 cursor-pointer">
+          profile
+        </button>
+      </li>
+
       <li>
-        <a className="text-white text-base no-underline hover:text-red-400 cursor-pointer">
+        <button className="text-white text-base no-underline hover:text-red-400 cursor-pointer">
           Logout
-        </a>
+        </button>
       </li>
     </ul>
 
