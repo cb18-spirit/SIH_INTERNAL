@@ -6,7 +6,8 @@ import Login from './pages/Login'
 import Emailverify from './pages/Emailverify'
 import ResetPassword from './pages/ResetPassword'
 import Updates from './pages/Updates'
-
+import AIAssistant from './pages/AIAssistant'
+import DiseaseDetection from './pages/DiseaseDetection' 
 
 
 const App = () => {
@@ -18,6 +19,8 @@ const App = () => {
          <Route path='/email-verify' element={<Emailverify/>}/>
           <Route path='/reset-password' element={<ResetPassword/>}/>
           <Route path='/updates' element={<Updates/>}/>
+          <Route path='/AI-Assistant' element={<AIAssistant/>}/>
+          <Route path='/Disease-Detection' element={<DiseaseDetection/>}/>
       </Routes>
     </div>
   )
