@@ -16,13 +16,7 @@ const Navbar = () => {
         </h1>
 
 
-        {/* Navigation Links */}
-        <ul className="hidden md:flex gap-8 text-lg font-medium">
-          <li className="hover:text-green-400 cursor-pointer transition">Home</li>
-          <li className="hover:text-green-400 cursor-pointer transition">Features</li>
-          <li className="hover:text-green-400 cursor-pointer transition">About</li>
-          <li className="hover:text-green-400 cursor-pointer transition">Contact</li>
-        </ul>
+       
 
         {/* Login Button */}
         <button
