@@ -15,13 +15,17 @@ mongoose.connect(MONGOURL).then(() => {
   console.error("Connection error:", err.message);
 });
 import authRouter from './routes/authRoutes.js';
+import userAuth from "./middleware/userAuth.js";
+
 
 const app=express();
 const port=3000;
 
+const allowedOrigins = ['http://localhost:5173'];
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({credentials: true}));
+app.use(cors({origin:allowedOrigins, credentials: true}));
 
 //api end points
 app.get('/', (req, res) => {
