@@ -29,30 +29,22 @@ const Updates = () => {
             md:static md:flex md:flex-row md:gap-[50px] pr-20
             transition-all duration-300 ${menuOpen ? "flex" : "hidden md:flex"}`}
         >
-          <li>
-            <a href="/about" className="text-white text-xl no-underline">
-              DashBoard
-            </a>
-          </li>
+
           <li>
             <a href="/Projects" className="text-white text-xl no-underline">
              AI Assistant
             </a>
           </li>
           <li>
-            <a href="/blogs" className="text-white text-xl no-underline">
+            <a href="/blogs" className="text-white text-xl no-underline pr-180">
               Disease Detection
             </a>
           </li>
-          <li>
-            <a href="/contact" className="text-white text-xl no-underline">
-             Weather
-            </a>
-          </li>
+    
 
            <li>
             <a href="/contact" className="text-white text-xl no-underline">
-             Market Prices
+               logout
             </a>
           </li>
 
