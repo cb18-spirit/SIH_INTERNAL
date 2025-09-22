@@ -13,51 +13,50 @@ const Updates = () => {
 
   return (
     <div className="bg-[#E5F6DF]">
-    <nav className="bg-blue-900 relative flex flex-row md:flex-row items-start md:items-center justify-between">
-
-     <a
-        href="/"
-        className="text-white text-2xl md:text-3xl font-semibold no-underline mb-4 md:mb-0"
-      >
-        AgriSmart
-      </a>
-
-       <img
-        className="w-[55px] h-[30px] cursor-pointer md:hidden mb-4 md:mb-0"
-        src={menuOpen ? "/UpdatesNavbar/wrongmark.svg" : "/UpdatesNavbar/bars.svg"}
-        onClick={() => setMenuOpen(!menuOpen)}
-        alt="menu toggle"
-      />
-
-      <ul
-          onClick={() => setMenuOpen(false)}
-          className={`absolute right-6 top-20 flex-col items-center gap-3 rounded-lg
-            bg-gradient-to-t from-[rgba(25,55,109,0.2)] to-[rgba(25,55,109,1)] p-6 shadow-md 
-            md:static md:flex md:flex-row md:gap-[50px] pr-20
-            transition-all duration-300 ${menuOpen ? "flex" : "hidden md:flex"}`}
-        >
-
-          <li>
-            <button onClick={()=>navigate('/AI-Assistant')} className="text-white text-xl no-underline">
-             AI Assistant
-            </button>
-          </li>
-          <li>
-            <button onClick={()=>navigate('/Disease-Detection')} className="text-white text-xl no-underline">
-             Disease Detection
-            </button>
-          </li>
+    <nav className="bg-blue-900 flex items-center justify-between px-4 py-1 shadow-md">
     
+    {/* Logo */}
+    <a
+      href="/"
+      className="text-white text-xl font-semibold no-underline"
+    >
+      AgriSmart
+    </a>
 
-           <li>
-            <a  className="text-white text-xl no-underline">
-               logout
-            </a>
-          </li>
+    {/* Mobile Toggle */}
+    <img
+      className="w-6 h-6 cursor-pointer md:hidden"
+      src={menuOpen ? "/UpdatesNavbar/wrongmark.svg" : "/UpdatesNavbar/bars.svg"}
+      onClick={() => setMenuOpen(!menuOpen)}
+      alt="menu toggle"
+    />
 
-          </ul>
-      
-    </nav>
+    {/* Menu */}
+    <ul
+      onClick={() => setMenuOpen(false)}
+      className={`absolute right-4 top-14 flex-col items-center gap-3 rounded-md
+        bg-blue-900 p-4 shadow-md 
+        md:static md:flex md:flex-row md:gap-8 md:bg-transparent md:shadow-none
+        transition-all duration-300 ${menuOpen ? "flex" : "hidden md:flex"}`}
+    >
+      <li>
+        <button onClick={() => navigate('/AI-Assistant')} className="text-white text-base no-underline hover:text-green-300">
+          AI Assistant
+        </button>
+      </li>
+      <li>
+        <button onClick={() => navigate('/Disease-Detection')} className="text-white text-base no-underline hover:text-green-300">
+          Disease Detection
+        </button>
+      </li>
+      <li>
+        <a className="text-white text-base no-underline hover:text-red-400 cursor-pointer">
+          Logout
+        </a>
+      </li>
+    </ul>
+
+  </nav>
     {/*hero section*/}
     <div>
       <div className="p-6 ">
@@ -180,8 +179,9 @@ const Updates = () => {
       </div>
 
       {/* MODAL */}
+            {/* MODAL */}
       {openModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#E5F6DF] bg-opacity-90">
           <div className="bg-white rounded-xl shadow-lg p-6 w-[400px] relative">
             {/* Close Button */}
             <button
@@ -222,6 +222,7 @@ const Updates = () => {
           </div>
         </div>
       )}
+
     </div>
 
     </div>
