@@ -51,7 +51,7 @@ export const register= async(req, res)=>{
 
     await nodemailer.sendMail(mailOptions);
 
-     return res.json({success:true});
+     return res.json({success:true,message:'user registered successfully'});
         
     } catch (error) {
        return res.json({success:false, message:error.message});
@@ -89,7 +89,7 @@ try {
 
     })
     
-    return res.json({success:true});
+    return res.json({success:true,});
 } catch (error) {
     return res.json({success:false, message:error.message});
     }
@@ -161,12 +161,18 @@ export const verifyAccount=async(req,res)=>{
             return res.json({success:false,message:'account already verified'});
         }
 
-        if(Date.now()>user.verifiyOtpExpireAt || user.verifiyOtp!==otp){
+        if(Date.now()>user.verifiyOtpExpireAt || user.verifiyOtp!==otp || user.verifiyOtp===''){
             return res.json({success:false,message:'invalid or expired otp'});
         }
+         
+        user.isAccountVerified=true;
+        user.verifiyOtp='';
+        user.verifiyOtpExpireAt=0;
 
+        await user.save();
+        return res.json({success:true,message:'account verified successfully'});
 
-       
+        
 
 }catch(error){
     return res.json({success:false,message:error.message})

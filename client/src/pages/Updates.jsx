@@ -6,13 +6,13 @@ const Updates = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-blue-900 relative flex flex-row md:flex-row items-start md:items-center justify-between pt-[47px] mx-[4%] z-20">
+    <nav className="bg-blue-900 relative flex flex-row md:flex-row items-start md:items-center justify-between">
 
      <a
         href="/"
         className="text-white text-2xl md:text-3xl font-semibold no-underline mb-4 md:mb-0"
       >
-        Portfoli0
+        AgriSmart
       </a>
 
        <img
@@ -24,29 +24,35 @@ const Updates = () => {
 
       <ul
           onClick={() => setMenuOpen(false)}
-          className={`absolute right-6 top-20 flex-col items-center gap-3 rounded-lg 
+          className={`absolute right-6 top-20 flex-col items-center gap-3 rounded-lg
             bg-gradient-to-t from-[rgba(25,55,109,0.2)] to-[rgba(25,55,109,1)] p-6 shadow-md 
-            md:static md:flex md:flex-row md:gap-[50px] md:bg-transparent md:shadow-none 
+            md:static md:flex md:flex-row md:gap-[50px] pr-20
             transition-all duration-300 ${menuOpen ? "flex" : "hidden md:flex"}`}
         >
           <li>
             <a href="/about" className="text-white text-xl no-underline">
-              About
+              DashBoard
             </a>
           </li>
           <li>
             <a href="/Projects" className="text-white text-xl no-underline">
-              Projects
+             AI Assistant
             </a>
           </li>
           <li>
             <a href="/blogs" className="text-white text-xl no-underline">
-              Blogs
+              Disease Detection
             </a>
           </li>
           <li>
             <a href="/contact" className="text-white text-xl no-underline">
-              Contact
+             Weather
+            </a>
+          </li>
+
+           <li>
+            <a href="/contact" className="text-white text-xl no-underline">
+             Market Prices
             </a>
           </li>
 
