@@ -8,6 +8,7 @@ import ResetPassword from './pages/ResetPassword'
 import Updates from './pages/Updates'
 import AIAssistant from './pages/AIAssistant'
 import DiseaseDetection from './pages/DiseaseDetection' 
+import Profile from './pages/profile'
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/updates' element={<Updates/>}/>
           <Route path='/AI-Assistant' element={<AIAssistant/>}/>
           <Route path='/Disease-Detection' element={<DiseaseDetection/>}/>
+          <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </div>
   )
