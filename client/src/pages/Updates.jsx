@@ -30,17 +30,9 @@ const Updates = () => {
       onClick={() => setMenuOpen(!menuOpen)}
       alt="menu toggle"
     />
-           <li>
-            <button onClick={()=>navigate('/Profile')} className="text-white text-xl no-underline">
-             profile
-            </button>
-          </li>
+           
 
-           <li>
-            <a  className="text-white text-xl no-underline">
-               logout
-            </a>
-          </li>
+          
 
     {/* Menu */}
     <ul
