@@ -50,6 +50,12 @@ const Updates = () => {
     
 
            <li>
+            <button onClick={()=>navigate('/Profile')} className="text-white text-xl no-underline">
+             profile
+            </button>
+          </li>
+
+           <li>
             <a  className="text-white text-xl no-underline">
                logout
             </a>
@@ -59,6 +65,8 @@ const Updates = () => {
       
     </nav>
     {/*hero section*/}
+
+
     <div>
       <div className="p-6 ">
         <h2 className="text-xl font-bold text-gray-800 ">Welcome,</h2>
