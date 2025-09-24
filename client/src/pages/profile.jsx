@@ -1,259 +1,328 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const Profile = () => {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("profileData");
-    return savedUser
-      ? JSON.parse(savedUser)
-      : {
-          firstName: "Part",
-          lastName: "Sarthi",
-          email: "mishraanju2073@gmail.com",
-          location: "Springfield, IL",
-          farmSize: 250,
-          crops: ["Corn", "Soybeans"],
-        };
+function Profile() {
+  const { id } = useParams();
+  const [profile, setProfile] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    farmLocation: "",
+    farmSize: "",
+    crops: [],
+    bio: ""
   });
 
-  const [posts, setPosts] = useState(() => {
-    const savedPosts = localStorage.getItem("userPosts");
-    return savedPosts ? JSON.parse(savedPosts) : [];
-  });
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState({ title: "", content: "", media: null });
 
-  const [newPost, setNewPost] = useState({ title: "", content: "", image: "" });
+  // -----------------------------
+  // Fetch profile + posts
+  // -----------------------------
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const url = id
+          ? `http://localhost:3000/api/users/${id}`       // public profile
+          : `http://localhost:3000/api/users/profile`;   // logged-in user
 
-  const handleSaveProfile = () => {
-    localStorage.setItem("profileData", JSON.stringify(user));
-    alert("✅ Profile saved successfully!");
-  };
+        const res = await fetch(url, {
+          method: "GET",
+          credentials: "include", // important if using cookies
+          headers: { "Content-Type": "application/json" }
+        });
 
-  const handleProfileChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prev) => ({ ...prev, [name]: value }));
-  };
+        const data = await res.json();
+        console.log("PROFILE DATA:", data);
 
-  const toggleCrop = (crop, checked) => {
-    if (checked) {
-      setUser((prev) => ({ ...prev, crops: [...prev.crops, crop] }));
-    } else {
-      setUser((prev) => ({
-        ...prev,
-        crops: prev.crops.filter((c) => c !== crop),
-      }));
-    }
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNewPost((prev) => ({ ...prev, image: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAddPost = () => {
-    if (!newPost.title || !newPost.content) {
-      alert("⚠️ Please fill in title and content.");
-      return;
-    }
-
-    const newEntry = {
-      id: Date.now(),
-      title: newPost.title,
-      date: new Date().toLocaleDateString(),
-      content: newPost.content,
-      image: newPost.image,
+        // If logged-in user endpoint: user is inside data.user
+        if (data.success && data.user) {
+          setProfile(data.user);
+        } else {
+          setProfile(data);
+        }
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+      }
     };
 
-    const updatedPosts = [newEntry, ...posts];
-    setPosts(updatedPosts);
-    localStorage.setItem("userPosts", JSON.stringify(updatedPosts));
+    const fetchPosts = async () => {
+      try {
+        if (!id) return; // Only fetch posts for specific users
+        const res = await fetch(`http://localhost:3000/api/users/${id}/posts`);
+        const data = await res.json();
+        console.log("POSTS DATA:", data);
+        setPosts(data);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+      }
+    };
 
-    setNewPost({ title: "", content: "", image: "" });
-    document.getElementById("postImage").value = "";
+    fetchProfile();
+    fetchPosts();
+  }, [id]);
+
+  // -----------------------------
+  // Profile form handlers
+  // -----------------------------
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  // 🗑️ Delete a post
-  const handleDeletePost = (id) => {
-    const updatedPosts = posts.filter((post) => post.id !== id);
-    setPosts(updatedPosts);
-    localStorage.setItem("userPosts", JSON.stringify(updatedPosts));
+  const handleCheckbox = (crop) => {
+    setProfile((prev) => ({
+      ...prev,
+      crops: prev.crops.includes(crop)
+        ? prev.crops.filter((c) => c !== crop)
+        : [...prev.crops, crop],
+    }));
   };
 
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = id
+        ? `http://localhost:3000/api/users/${id}`
+        : `http://localhost:3000/api/users/profile`;
+
+      const res = await fetch(url, {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile),
+      });
+
+      const data = await res.json();
+      console.log("UPDATE RESPONSE:", data);
+
+      if (data.success) {
+        alert("Profile Updated!");
+        if (data.updatedUser) setProfile(data.updatedUser);
+      } else {
+        alert(data.message || "Update failed");
+      }
+    } catch (err) {
+      console.error("Error updating profile:", err);
+    }
+  };
+
+  // -----------------------------
+  // Post handlers
+  // -----------------------------
+  const handlePostChange = (e) => {
+    if (e.target.name === "media") {
+      setNewPost({ ...newPost, media: e.target.files[0] });
+    } else {
+      setNewPost({ ...newPost, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handlePostSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!id) return alert("You must view a user's profile to post");
+
+      const formData = new FormData();
+      formData.append("title", newPost.title);
+      formData.append("content", newPost.content);
+      if (newPost.media) formData.append("media", newPost.media);
+
+      const res = await fetch(`http://localhost:3000/api/users/${id}/posts`, {
+        method: "POST",
+        body: formData,
+        credentials: "include"
+      });
+
+      const savedPost = await res.json();
+      console.log("NEW POST:", savedPost);
+
+      setPosts([savedPost, ...posts]);
+      setNewPost({ title: "", content: "", media: null });
+    } catch (err) {
+      console.error("Error creating post:", err);
+    }
+  };
+
+  // -----------------------------
+  // UI
+  // -----------------------------
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Profile Header */}
-      <div className="bg-green-700 text-white py-8 shadow-lg">
-        <div className="max-w-5xl mx-auto px-4">
-          <h1 className="text-3xl font-bold">
-            {user.firstName} {user.lastName}
-          </h1>
-          <p className="text-lg">{user.email}</p>
-          <p className="mt-1">
-            📍 {user.location} • 🌾 Farm Size: {user.farmSize} acres
-          </p>
-          <p className="mt-1">
-            🌱 Crops: {user.crops.length > 0 ? user.crops.join(", ") : "None"}
-          </p>
-        </div>
-      </div>
+    <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-green-100 to-green-300 p-6">
 
-      <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
-        {/* Profile Edit Form */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-green-700 mb-4">
-            Edit Profile
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="firstName"
-              value={user.firstName}
-              onChange={handleProfileChange}
-              placeholder="First Name"
-              className="border rounded-lg p-3"
-            />
-            <input
-              type="text"
-              name="lastName"
-              value={user.lastName}
-              onChange={handleProfileChange}
-              placeholder="Last Name"
-              className="border rounded-lg p-3"
-            />
-            <input
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handleProfileChange}
-              placeholder="Email"
-              className="border rounded-lg p-3 col-span-2"
-            />
-            <input
-              type="text"
-              name="location"
-              value={user.location}
-              onChange={handleProfileChange}
-              placeholder="Farm Location"
-              className="border rounded-lg p-3 col-span-2"
-            />
-            <input
-              type="number"
-              name="farmSize"
-              value={user.farmSize}
-              onChange={handleProfileChange}
-              placeholder="Farm Size (acres)"
-              className="border rounded-lg p-3 col-span-2"
-            />
-          </div>
+      {/* Profile Edit Form */}
+      <form
+        onSubmit={handleProfileSubmit}
+        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl mb-10"
+      >
+        <h2 className="text-2xl font-bold text-green-700 mb-6 text-center">
+          Edit Profile
+        </h2>
 
-          {/* Crops */}
-          <div className="mt-4">
-            <p className="font-semibold mb-2">Primary Crops:</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {["Corn", "Soybeans", "Wheat", "Tomatoes", "Cotton"].map(
-                (crop) => (
-                  <label
-                    key={crop}
-                    className="flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-lg border"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={user.crops.includes(crop)}
-                      onChange={(e) => toggleCrop(crop, e.target.checked)}
-                    />
-                    <span>{crop}</span>
-                  </label>
-                )
-              )}
-            </div>
-          </div>
-
-          <button
-            onClick={handleSaveProfile}
-            className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
-          >
-            Save Profile
-          </button>
-        </div>
-
-        {/* Create Post */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-green-700 mb-4">
-            Create a Post
-          </h2>
+        {/* Name */}
+        <div className="flex gap-4 mb-4">
           <input
             type="text"
-            value={newPost.title}
-            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-            placeholder="Post Title"
-            className="w-full border rounded-lg p-3 mb-3"
-          />
-          <textarea
-            value={newPost.content}
-            onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-            placeholder="What's on your mind?"
-            className="w-full border rounded-lg p-3 mb-3"
-            rows="4"
+            name="firstName"
+            placeholder="First Name"
+            value={profile.firstName}
+            onChange={handleChange}
+            className="border border-gray-300 p-3 rounded-lg w-1/2 focus:ring-2 focus:ring-green-500 outline-none"
           />
           <input
-            type="file"
-            id="postImage"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="mb-3"
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={profile.lastName}
+            onChange={handleChange}
+            className="border border-gray-300 p-3 rounded-lg w-1/2 focus:ring-2 focus:ring-green-500 outline-none"
           />
-          <button
-            onClick={handleAddPost}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-          >
-            Post
-          </button>
         </div>
 
-        {/* Posts Feed */}
-        <div>
-          <h2 className="text-2xl font-bold text-green-700 mb-4">My Posts</h2>
+        {/* Email */}
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={profile.email}
+          onChange={handleChange}
+          className="border border-gray-300 p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-green-500 outline-none"
+        />
+
+        {/* Bio */}
+        <textarea
+          name="bio"
+          placeholder="Write something about yourself..."
+          value={profile.bio}
+          onChange={handleChange}
+          className="border border-gray-300 p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-green-500 outline-none"
+        ></textarea>
+
+        {/* Farm Location */}
+        <input
+          type="text"
+          name="farmLocation"
+          placeholder="Farm Location"
+          value={profile.farmLocation}
+          onChange={handleChange}
+          className="border border-gray-300 p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-green-500 outline-none"
+        />
+
+        {/* Farm Size */}
+        <input
+          type="number"
+          name="farmSize"
+          placeholder="Farm Size (acres)"
+          value={profile.farmSize}
+          onChange={handleChange}
+          className="border border-gray-300 p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-green-500 outline-none"
+        />
+
+        {/* Crops */}
+        <label className="block font-semibold text-gray-700 mb-2">
+          Primary Crops:
+        </label>
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {["Corn", "Soybeans", "Wheat", "Tomatoes", "Cotton"].map((crop) => (
+            <label
+              key={crop}
+              className="flex items-center space-x-2 border p-2 rounded-lg cursor-pointer hover:bg-green-50"
+            >
+              <input
+                type="checkbox"
+                checked={profile.crops.includes(crop)}
+                onChange={() => handleCheckbox(crop)}
+                className="h-4 w-4 text-green-600"
+              />
+              <span>{crop}</span>
+            </label>
+          ))}
+        </div>
+
+        {/* Save button */}
+        <button
+          type="submit"
+          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition duration-200"
+        >
+          Save Profile
+        </button>
+      </form>
+
+      {/* Post Section */}
+      {id && (
+        <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
+          <h2 className="text-2xl font-bold text-green-700 mb-6 text-center">
+            My Posts
+          </h2>
+
+          {/* New Post Form */}
+          <form onSubmit={handlePostSubmit} className="mb-6">
+            <input
+              type="text"
+              name="title"
+              placeholder="Post Title"
+              value={newPost.title}
+              onChange={handlePostChange}
+              className="border border-gray-300 p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-green-500 outline-none"
+            />
+            <textarea
+              name="content"
+              placeholder="Write your post..."
+              value={newPost.content}
+              onChange={handlePostChange}
+              className="border border-gray-300 p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-green-500 outline-none"
+            ></textarea>
+            <input
+              type="file"
+              name="media"
+              accept="image/*,video/*"
+              onChange={handlePostChange}
+              className="mb-4"
+            />
+            <button
+              type="submit"
+              className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold transition duration-200"
+            >
+              Add Post
+            </button>
+          </form>
+
+          {/* Post List */}
           {posts.length === 0 ? (
-            <p className="text-gray-500 text-lg">No posts yet. Create one above!</p>
+            <p className="text-gray-500 text-center">No posts yet</p>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {posts.map((post) => (
                 <div
-                  key={post.id}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden"
+                  key={post._id}
+                  className="border border-gray-200 rounded-lg p-4 shadow-sm"
                 >
-                  {post.image && (
-                    <img
-                      src={post.image}
-                      alt="Post"
-                      className="w-full max-h-[600px] object-cover"
-                    />
-                  )}
-                  <div className="p-6 relative">
-                    <h3 className="font-bold text-xl">{post.title}</h3>
-                    <p className="text-sm text-gray-500 mb-3">{post.date}</p>
-                    <p className="text-lg">{post.content}</p>
+                  <h3 className="font-bold text-lg">{post.title}</h3>
+                  <p className="text-gray-700">{post.content}</p>
 
-                    {/* 🗑️ Delete Button */}
-                    <button
-                      onClick={() => handleDeletePost(post.id)}
-                      className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  {/* Display media */}
+                  {post.media && (
+                    <>
+                      {post.media.endsWith(".mp4") ? (
+                        <video controls className="w-full my-2">
+                          <source src={`http://localhost:3000/uploads${post.media}`} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <img src={`http://localhost:3000/${post.media}`} alt="" className="w-full my-2" />
+                      )}
+                    </>
+                  )}
+
+                  <small className="text-gray-500">
+                    {new Date(post.createdAt).toLocaleString()}
+                  </small>
                 </div>
               ))}
             </div>
           )}
         </div>
-      </div>
+      )}
     </div>
   );
-};
+}
 
 export default Profile;

@@ -1,28 +1,25 @@
-import e from "express";
 import jwt from "jsonwebtoken";
 
-const userAuth=async(req,res,next)=>{
-    const{token}=req.cookies;
+const userAuth = async (req, res, next) => {
+  const { token } = req.cookies;
 
-    if(!token){
-        return res.json({success:false,message:'please login first'});
+  if (!token) {
+    return res.json({ success: false, message: 'Please login first' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (decoded) {
+      req.userId = decoded.id; // <-- store here instead of req.body
+      next();
+    } else {
+      return res.json({ success: false, message: 'Token is not valid' });
     }
 
-    try{
-          
-        const decoded=jwt.verify(token,process.env.JWT_SECRET);
-       if(decoded){
-        req.body.userId=decoded.id;
-       }else{
-        return res.json({success:false,message:'token is not valid'});
-       }
-
-       next();
-
-
-    }catch(error){
-        return res.json({success:false,message:error.message});
-    }
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
 }
 
 export default userAuth;

@@ -16,10 +16,15 @@ mongoose.connect(MONGOURL).then(() => {
 });
 import authRouter from './routes/authRoutes.js';
 import userAuth from "./middleware/userAuth.js";
+import usersRouter from "./routes/users.js";
+
+import postsRouter from "./routes/posts.js";
+
 
 
 const app=express();
 const port=3000;
+
 
 const allowedOrigins = ['http://localhost:5173'];
 
@@ -34,6 +39,9 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth',authRouter)
+app.use('/api/userauth',userAuth);
+app.use('/api/users', userAuth, usersRouter);
+app.use('/api/posts', userAuth, postsRouter);
 
 
 

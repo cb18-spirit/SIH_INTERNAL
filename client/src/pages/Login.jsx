@@ -75,7 +75,7 @@ const onsubmitHandler=async(e)=>{
             <span className="material-symbols-outlined">
                mail
               </span>
-        <input  onChange={e=>setEmail(e.target.value)} value={email} type="email" placeholder='Email' className='bg-transparent outline-none '/>
+        <input  onChange={e=>setEmail(e.target.value)} value={email} type="email" placeholder='Email' className='bg-transparent outline-none'/>
            </div>
 
 
@@ -90,7 +90,7 @@ const onsubmitHandler=async(e)=>{
 
         
             <button type="submit"
-            className='w-full py-3 rounded-full bg-gradient-to-l from-indigo-500 to-indigo-900' >{state}</button>
+            className='w-full py-3 rounded-full bg-gradient-to-l from-indigo-500 to-indigo-900 hover:' >{state}</button>
       </form>
 
       
@@ -99,7 +99,7 @@ const onsubmitHandler=async(e)=>{
         <span className='px-2 text-blue-500 cursor-pointer underline' onClick={()=>setState(state==='signup'?'login':'signup')}>
           Login Here
         </span>
-      </p>):(  <p className='text-gray-300 mt-5 '>
+      </p>):(<p className='text-gray-300 mt-5 '>
         Don't have an Account? 
         <span className='px-2 text-blue-500 cursor-pointer underline' onClick={()=>setState(state==='signup'?'login':'signup')}>
           SignUp Here
