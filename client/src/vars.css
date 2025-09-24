@@ -1,12 +1,36 @@
-:root{
-    --color-text:#fff;
-    --color-primary:grey;
-    --color-secondary:#19376d;
-    --color-dark:#0b2447;
-    --color-bg:#04152d;
+:root {
+  /* Agricultural Green Theme */
+  --color-text: #1f2937;
+  --color-text-light: #6b7280;
+  --color-text-white: #ffffff;
 
+  /* Primary Green Shades */
+  --color-primary: #22c55e; /* Fresh green */
+  --color-primary-light: #86efac; /* Light green */
+  --color-primary-dark: #16a34a; /* Dark green */
 
+  /* Secondary Earth Tones */
+  --color-secondary: #65a30d; /* Lime green */
+  --color-accent: #eab308; /* Golden yellow */
+  --color-accent-light: #fef3c7; /* Light yellow */
 
-    --font-robot:"roboto";
+  /* Neutral Tones */
+  --color-bg: #f9fafb; /* Light gray background */
+  --color-surface: #ffffff; /* White surface */
+  --color-border: #e5e7eb; /* Light border */
+  --color-dark: #374151; /* Dark gray */
 
+  /* Agricultural Specific */
+  --color-earth: #a3a3a3; /* Earth brown */
+  --color-sky: #3b82f6; /* Sky blue */
+
+  /* Typography */
+  --font-primary: "Inter", "Segoe UI", Talisman, sans-serif;
+  --font-robot: "Roboto", sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 }

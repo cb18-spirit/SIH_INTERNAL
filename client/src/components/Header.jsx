@@ -1,109 +1,141 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import WeatherCard from './WeatherCard'
+import AIAssistantChat from './AIAssistantChat'
 
 const Header = () => {
   return (
-    <div className='bg-[#bbb089b3]'>
-    
-   {/*<img className="w-full sm:h-170 h-80" src="./public/p1.jpg" />*/}
-
-<div className="flex flex-col md:flex-row justify-around items-center mt-16 gap-12 px-6">
-  
-  {/* Left side text */}
-  <div className="w-full md:w-1/2 text-center md:text-left ml-30 mt-20">
-  <div className="bg-[#051732] text-white p-10 rounded-2xl shadow-xl">
-    <h1 className="font-extrabold text-2xl md:text-5xl text-white drop-shadow-lg">
-      WELCOME TO <span className="text-[#285ca8]">SMART FARMING</span>
-    </h1>
-    <p className="pt-6 text-gray-300 md:text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
-      Empowering farmers with <span className="font-semibold text-[#285ca8]">modern technology </span> 
-      to grow smarter, healthier, and more sustainable crops.  
-      From weather alerts to soil guidance, we’re here to make farming 
-      simpler and more productive for you.
-    </p>
-  </div>
-</div>
-
-
-   
-
-  {/* Right side circle */}
-
-  <div className="w-full md:w-1/2 flex justify-center mt-20">
-    <div className="relative grid border-[12px] aspect-square text-[#285ca8] rounded-full 
-                    w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] md:w-[340px] md:h-[340px]
-                    bg-gradient-to-br from-[#051732] to-[#0a2345] shadow-xl">
-      
-      <h3 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                     text-center text-white font-semibold text-lg sm:text-xl">
-        Smarter Farming,<br/>Better Future 🌱
-
-      </h3>
-
-      {/* Floating images with animation */}
-      <img className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full top-[-40px] left-1/2 -translate-x-1/2 " src="fertilizer1.jpg" />
-      <img className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bottom-[-40px] left-[10%] " src="fertilizer2.jpg" />
-      <img className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bottom-[-40px] right-[10%] " src="fertilizer3.webp" />
-    </div>
-  </div>
-</div>
-
-  
-  {/*hero section*/}
-  <div>
-   <section className="  text-black min-h-screen flex items-center justify-center">
-      <div className="text-center px-6 max-w-6xl">
-        {/* Main Heading */}
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-12">
-          Smart Farming Assistance
-        </h1>
-
-        {/* Features in Boxes */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div className="bg-[#285ca8]  backdrop-blur-lg p-6 rounded-2xl shadow-lg text-left hover:scale-105 transition">
-            <h2 className="text-2xl font-semibold mb-2">🌦 Weather-based alerts</h2>
-            <p className="text-gray-200">
-              Get real-time updates and predictive forecasts to plan your farming activities better.
-            </p>
-          </div>
-
-          <div className="bg-[#285ca8]  backdrop-blur-lg p-6 rounded-2xl shadow-lg text-left hover:scale-105 transition">
-            <h2 className="text-2xl font-semibold mb-2">🐛 Pest & disease detection</h2>
-            <p className="text-gray-200">
-              Upload crop images to identify pests or diseases early and receive timely advice.
-            </p>
-          </div>
-
-          <div className="bg-[#285ca8]  backdrop-blur-lg p-6 rounded-2xl shadow-lg text-left hover:scale-105 transition">
-            <h2 className="text-2xl font-semibold mb-2">💹 Market price tracking</h2>
-            <p className="text-gray-200">
-              Stay updated with daily market prices to make informed selling and buying decisions.
-            </p>
-          </div>
-
-          <div className="bg-[#285ca8]  backdrop-blur-lg p-6 rounded-2xl shadow-lg text-left hover:scale-105 transition">
-            <h2 className="text-2xl font-semibold mb-2">🎙 Voice support</h2>
-            <p className="text-gray-200">     
-              Access features with simple voice commands, designed for low-literate users.
-            </p>
-          </div>
-
-          <div className="bg-[#285ca8] backdrop-blur-lg p-6 rounded-2xl shadow-lg text-left hover:scale-105 transition">
-            <h2 className="text-2xl font-semibold mb-2">📊 Feedback & improvement</h2>
-            <p className="text-gray-200">
-              Share your experiences to improve services and get smarter recommendations over time.
-            </p>
-          </div>
-          <div className="bg-[#285ca8]  backdrop-blur-lg p-6 rounded-2xl shadow-lg text-left hover:scale-105 transition">
-            <h2 className="text-2xl font-semibold mb-2">💹 Soil health recommendationsand guidance</h2>
-            <p className="text-gray-200">
-              Stay updated with daily market prices to make informed selling and buying decisions.
-            </p>
+    <div className='bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen'>
+      {/* Hero Section */}
+      <div className='text-center py-20'>
+        <div className='max-w-4xl mx-auto px-6'>
+          <h1 className='text-5xl font-bold text-green-800 mb-6'>
+            🌾 SmartFarm AI Assistant
+          </h1>
+          <p className='text-xl text-green-700 mb-8 leading-relaxed'>
+            AI-powered agricultural advisory platform for farmers<br/>
+            <span className='text-lg text-green-600'>
+              Get expert farming advice, soil analysis, disease detection & market prices
+            </span>
+          </p>
+          
+          {/* Key Stats */}
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-12'>
+            <div className='bg-white rounded-xl p-6 shadow-md border border-green-100'>
+              <div className='text-3xl font-bold text-green-600'>86%</div>
+              <div className='text-sm text-gray-600'>Small & Marginal Farmers in India</div>
+            </div>
+            <div className='bg-white rounded-xl p-6 shadow-md border border-green-100'>
+              <div className='text-3xl font-bold text-green-600'>20-30%</div>
+              <div className='text-sm text-gray-600'>Yield Increase with ICT Advisory</div>
+            </div>
+            <div className='bg-white rounded-xl p-6 shadow-md border border-green-100'>
+              <div className='text-3xl font-bold text-green-600'>6+</div>
+              <div className='text-sm text-gray-600'>Regional Languages Supported</div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-  </div>
-    
+
+      {/* Main Features Grid */}
+      <div className='max-w-7xl mx-auto px-6 pb-20'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+          {/* AI Assistant */}
+                      <div>
+              <h2 className='text-2xl font-bold text-green-800 flex items-center gap-3 mb-4'>
+                🤖 AI Agricultural Assistant
+              </h2>
+              <p className='text-green-700 mb-4'>
+                Get real-time farming advice with AI-powered expert recommendations
+              </p>
+              <AIAssistantChat />
+            </div>
+
+          {/* Weather & Tools */}
+          <div className='space-y-6'>
+            {/* Weather Card */}
+            <div>
+              <div className='flex items-center justify-between mb-4'>
+                <h2 className='text-2xl font-bold text-green-800 flex items-center gap-3'>
+                  🌤️ Weather Advisory
+                </h2>
+                <Link to="/weather-advisory" className='bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-medium'>
+                  Full Advisory
+                </Link>
+              </div>
+              <WeatherCard />
+            </div>
+
+            {/* Quick Tools */}
+            <div className='grid grid-cols-2 gap-4'>
+              <a href='/soil-health' className='bg-white rounded-xl p-6 shadow-md border border-green-100 hover:shadow-lg transition-shadow cursor-pointer block'>
+                <div className='text-3xl mb-3'>🔬</div>
+                <h3 className='font-bold text-green-800'>Soil Health</h3>
+                <p className='text-sm text-gray-600'>Test & analyze your soil</p>
+              </a>
+              
+              <a href='/disease-detection' className='bg-white rounded-xl p-6 shadow-md border border-green-100 hover:shadow-lg transition-shadow cursor-pointer block'>
+                <div className='text-3xl mb-3'>🐛</div>
+                <h3 className='font-bold text-green-800'>Disease Detection</h3>
+                <p className='text-sm text-gray-600'>Upload crop photos</p>
+              </a>
+              
+              <a href='/market-prices' className='bg-white rounded-xl p-6 shadow-md border border-green-100 hover:shadow-lg transition-shadow cursor-pointer block'>
+                <div className='text-3xl mb-3'>💰</div>
+                <h3 className='font-bold text-green-800'>Market Prices</h3>
+                <p className='text-sm text-gray-600'>Track crop rates</p>
+              </a>
+              
+              <a href='/dashboard' className='bg-white rounded-xl p-6 shadow-md border border-green-100 hover:shadow-lg transition-shadow cursor-pointer block'>
+                <div className='text-3xl mb-3'>📊</div>
+                <h3 className='font-bold text-green-800'>Dashboard</h3>
+                <p className='text-sm text-gray-600'>Your farming insights</p>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Overview */}
+        <div className='mt-16'>
+          <h2 className='text-3xl font-bold text-center text-green-800 mb-12'>
+            Complete Agricultural Solution Platform
+          </h2>
+          
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+            <div className='text-center p-6'>
+              <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+                <span className='text-2xl'>🗣️</span>
+              </div>
+              <h3 className='font-bold text-green-800 mb-2'>Voice Support</h3>
+              <p className='text-sm text-gray-600'>Speak your questions and get audio responses</p>
+            </div>
+            
+            <div className='text-center p-6'>
+              <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+                <span className='text-2xl'>🤖</span>
+              </div>
+              <h3 className='font-bold text-green-800 mb-2'>AI-Powered</h3>
+              <p className='text-sm text-gray-600'>Advanced AI for accurate farming advice</p>
+            </div>
+            
+            <div className='text-center p-6'>
+              <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+                <span className='text-2xl'>📱</span>
+              </div>
+              <h3 className='font-bold text-green-800 mb-2'>Mobile Friendly</h3>
+              <p className='text-sm text-gray-600'>Access anywhere, anytime on any device</p>
+            </div>
+            
+            <div className='text-center p-6'>
+              <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+                <span className='text-2xl'>🎯</span>
+              </div>
+              <h3 className='font-bold text-green-800 mb-2'>Personalized</h3>
+              <p className='text-sm text-gray-600'>Tailored advice for your specific crops</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import BackNavigation from '../components/BackNavigation';
 
 function Profile() {
   const { id } = useParams();
@@ -147,9 +148,11 @@ function Profile() {
   // UI
   // -----------------------------
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-green-100 to-green-300 p-6">
-
-      {/* Profile Edit Form */}
+    <div className="min-h-screen bg-gradient-to-r from-green-100 to-green-300">
+      <BackNavigation title="Back" />
+      
+      <div className="flex flex-col items-center p-6">
+        {/* Profile Edit Form */}
       <form
         onSubmit={handleProfileSubmit}
         className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl mb-10"
@@ -321,6 +324,7 @@ function Profile() {
           )}
         </div>
       )}
+      </div>
     </div>
   );
 }

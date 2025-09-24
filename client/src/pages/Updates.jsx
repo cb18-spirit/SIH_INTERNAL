@@ -1,7 +1,7 @@
 
 import React , {useState}from 'react'
-
 import { useNavigate } from 'react-router-dom';
+import BackNavigation from '../components/BackNavigation';
 
 const Updates = () => {
 
@@ -13,6 +13,7 @@ const Updates = () => {
 
   return (
     <div className="bg-[#E5F6DF]">
+      <BackNavigation title="Back" />
     <nav className="bg-blue-900 flex items-center justify-between px-4 py-1 shadow-md">
     
     {/* Logo */}

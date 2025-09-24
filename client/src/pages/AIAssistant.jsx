@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BackNavigation from '../components/BackNavigation';
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([
@@ -24,6 +25,8 @@ const ChatApp = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
+      <BackNavigation title="Back" />
+      
       {/* Full-width Navbar */}
       <div className="bg-green-600 text-white py-4 px-6 text-xl font-bold shadow">
         AI Assistant 💬

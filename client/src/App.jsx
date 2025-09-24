@@ -9,6 +9,10 @@ import Updates from './pages/Updates'
 import AIAssistant from './pages/AIAssistant'
 import DiseaseDetection from './pages/DiseaseDetection' 
 import Profile from './pages/profile'
+import SoilHealth from './pages/SoilHealth'
+import MarketPrices from './pages/MarketPrices'
+import WeatherAdvisory from './pages/WeatherAdvisory'
+import FarmerDashboard from './pages/FarmerDashboard'
 
 
 const App = () => {
@@ -22,6 +26,11 @@ const App = () => {
           <Route path='/updates' element={<Updates/>}/>
           <Route path='/AI-Assistant' element={<AIAssistant/>}/>
           <Route path='/Disease-Detection' element={<DiseaseDetection/>}/>
+          <Route path='/disease-detection' element={<DiseaseDetection/>}/>
+          <Route path='/soil-health' element={<SoilHealth/>}/>
+          <Route path='/market-prices' element={<MarketPrices/>}/>
+          <Route path='/weather-advisory' element={<WeatherAdvisory/>}/>
+          <Route path='/dashboard' element={<FarmerDashboard/>}/>
           <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </div>
