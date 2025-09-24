@@ -18,7 +18,7 @@ import authRouter from './routes/authRoutes.js';
 import userAuth from "./middleware/userAuth.js";
 import usersRouter from "./routes/users.js";
 
-import postsRouter from "./routes/posts.js";
+
 
 
 
@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth',authRouter)
 app.use('/api/userauth',userAuth);
 app.use('/api/users', userAuth, usersRouter);
-app.use('/api/posts', userAuth, postsRouter);
+
 
 
 
