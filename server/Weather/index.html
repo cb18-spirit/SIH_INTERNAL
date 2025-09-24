@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-Time Weather</title>
+</head>
+<body>
+  <h1>Weather Forecast</h1>
+  <div id="weather">Loading...</div>
+
+  <script>
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        fetchWeather(latitude, longitude);
+      },
+      (error) => {
+        document.getElementById('weather').innerHTML = "Could not get location.";
+        console.error(error);
+      }
+    );
+
+    async function fetchWeather(lat, lon) {
+        const apiKey = '7J8YGPAQM6J96T3HAU6ZSDJDG';
+        const unitGroup = 'metric';
+        const contentType = 'json';
+        const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?unitGroup=${unitGroup}&contentType=${contentType}&key=${apiKey}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            displayWeather(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function displayWeather(data) {
+        const container = document.getElementById('weather');
+        container.innerHTML = '';
+        data.days.forEach(day => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <h3>${day.datetime}</h3>
+                <p>Temp: ${day.temp}°C</p>
+                <p>Conditions: ${day.conditions}</p>
+            `;
+            container.appendChild(div);
+        });
+    }
+  </script>
+</body>
+</html>
